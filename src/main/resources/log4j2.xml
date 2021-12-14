@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Configuration status="debug">
+
+    <Properties>
+        <Property name="baseDir">logs</Property>
+    </Properties>
+
+    <Appenders>
+        <Console name="CONSOLE" target="SYSTEM_OUT">
+            <PatternLayout
+                    pattern="[%highlight{%-5level}] %d{yyyy-MM-dd HH:mm:ss.SSS}  [%t] %highlight{%c.%M(%L)}: %m{nolookups}%n"/>
+        </Console>
+
+        <RollingFile name="RollingFile" fileName="${baseDir}/app-${date:yyyy-MM-HH-hh-mm-ss-SSS}.log"
+                     filePattern="${baseDir}/$${date:yyyy-MM}/app-%d{yyyy-MM-dd-HH}-%i.log.gz" ignoreExceptions="false">
+            <PatternLayout>
+                <Pattern>%-5level %d %c %M()/%L - %m{nolookups}%n</Pattern>
+            </PatternLayout>
+            <Policies>
+                <TimeBasedTriggeringPolicy/>
+                <SizeBasedTriggeringPolicy size="1MB"/>
+            </Policies>
+            <DefaultRolloverStrategy>
+                <!-- this configuration will delete files that match "*/app-*.log.gz" and are 30 days old or older, but keep the most recent 100 GB or the most recent 10 files, whichever comes first.-->
+                <Delete basePath="${baseDir}" maxDepth="2">
+                    <IfFileName glob="*/app-*.log.gz">
+                        <IfLastModified age="5d">
+                            <IfAny>
+                                <IfAccumulatedFileSize exceeds="1 GB"/>
+                                <IfAccumulatedFileCount exceeds="20"/>
+                            </IfAny>
+                        </IfLastModified>
+                    </IfFileName>
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingFile>
+
+        <Async name="ASYNC" includeLocation="true">
+            <AppenderRef ref="RollingFile"/>
+            <AppenderRef ref="CONSOLE"/>
+        </Async>
+    </Appenders>
+
+    <Loggers>
+        <Root level="DEBUG">
+            <AppenderRef ref="ASYNC"/>
+        </Root>
+    </Loggers>
+</Configuration>
