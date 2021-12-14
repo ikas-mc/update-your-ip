@@ -26,9 +26,15 @@ key=
 time=1
 ```
 
-# update ip to host
+# update ip to host file (windows) 
 
 save this code to UpdateIp.java
+
+change host name : yuki-mc
+```
+yuki-mc #yuki-mc-server
+```
+
 
 ```java
 
