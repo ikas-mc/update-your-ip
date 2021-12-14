@@ -26,6 +26,12 @@ key=
 time=1
 ```
 
+# run as service (windows)
+
+see "update-your-ip/src/main/script/"   
+
+https://commons.apache.org/proper/commons-daemon/procrun.html
+
 # update ip to host file (windows sample) 
 
 save this code to UpdateIp.java
