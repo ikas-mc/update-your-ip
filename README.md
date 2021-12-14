@@ -26,7 +26,7 @@ key=
 time=1
 ```
 
-# update ip to host file (windows) 
+# update ip to host file (windows sample) 
 
 save this code to UpdateIp.java
 
